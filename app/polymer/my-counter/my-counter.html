@@ -1,0 +1,9 @@
+<polymer-element name="my-counter" attributes="counter">
+  <template>
+    <link rel="stylesheet" href="my-counter.css">
+    <div id="label"><content></content></div>
+    Value: <span id="counterVal">{{counter}}</span><br>
+    <button on-tap="{{increment}}">Increment</button>
+  </template>
+  <script src="my-counter.js"></script>
+</polymer-element>

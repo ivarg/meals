@@ -1,0 +1,106 @@
+<!doctype html>
+<html class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <title>meals</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+    <script src="bower_components/platform/platform.js"></script>
+
+    <!-- build:css styles/vendor.css -->
+    <!-- bower:css -->
+    <!-- endbower -->
+    <link rel="import" href="bower_components/core-meta/core-meta.html">
+    <link rel="import" href="bower_components/core-icons/core-icons.html">
+    <link rel="import" href="bower_components/core-pages/core-pages.html">
+    <link rel="import" href="bower_components/paper-shadow/paper-shadow.html">
+    <link rel="import" href="bower_components/paper-fab/paper-fab.html">
+    <link rel="import" href="bower_components/paper-input/paper-input.html">
+    <link rel="import" href="polymer/my-counter/my-counter.html">
+    <!-- endbuild -->
+
+    <!-- build:css styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- endbuild -->
+
+    <!-- build:js scripts/vendor/modernizr.js -->
+    <script src="bower_components/modernizr/modernizr.js"></script>
+    <!-- endbuild -->
+  </head>
+  <body>
+    <!--[if lt IE 10]>
+        <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+    <div id="drawer" class="drawer--open">
+      <paper-shadow z="2"></paper-shadow>
+
+      <div class="drawer__big">
+        <div class="drawer__big--pitch">
+          <paper-shadow z="2"></paper-shadow>
+          <p><strong><em>meals</em></strong> är en smart matplanerare som vet vad du och din familj tycker om, och som låter er tänka på annat än vad ni ska äta till middag. Idag, eller imorgon, eller nästa vecka.</p>
+          <p>En gång i veckan får ni en föreslagen meny som ni själv kan justera innan ni godkänner.</p>
+          <p>När ni har godkänt en meny genereras en inköpslista för det som behöver inhandlas. Varje dag skickar sedan appen en påminnelse om dagens rätt.</p>
+        </div>
+
+        <!-- <div class="registration"> -->
+        <!-- <paper-input label="Epostadress"></paper-input> -->
+        <!-- </div> -->
+      </div>
+
+      <div class="drawer__side">
+        <h1 id="home">me&#600;ls</h1>
+        <div class="drawer__lnk" id="whatis">Generera en matlista</div>
+        <div class="drawer__lnk" id="config">Konfigurera</div>
+        <!-- <div class="drawer__lnk" id="register">Registrera dig</div> -->
+      </div>
+    </div>
+
+    <div class="panel">
+      <core-pages selected="0">
+        <div class="mealplan">
+          <div class="meal-card day-1">
+            <paper-shadow z="1"></paper-shadow>
+            <div class="meal-card__name">Bouilla Baise</div>
+          </div>
+          <div class="meal-card day-2">
+            <paper-shadow z="1"></paper-shadow>
+            <div class="meal-card__name">Fiskpinnar & Spenat</div>
+          </div>
+          <div class="meal-card day-3" draggable="true">
+            <paper-shadow z="1"></paper-shadow>
+            <div class="meal-card__name">Lax i Ugn</div>
+          </div>
+          <div class="meal-card day-4" draggable="true">
+            <paper-shadow z="1"></paper-shadow>
+            <div class="meal-card__name">Köttbullar & Potatismos</div>
+          </div>
+          <div class="meal-card day-5">
+            <paper-shadow z="1"></paper-shadow>
+            <div class="meal-card__name">Fisk</div>
+          </div>
+          <div class="meal-card day-6">
+            <paper-shadow z="1"></paper-shadow>
+            <div class="meal-card__name">Blommig Falukorv</div>
+          </div>
+          <div class="meal-card day-7">
+            <paper-shadow z="1"></paper-shadow>
+            <div class="meal-card__name">Grodlår</div>
+          </div>
+        </div>
+      </core-pages>
+    </div>
+
+    <!-- build:js scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+
+    <!-- build:js scripts/main.js -->
+    <script src="scripts/main.js"></script>
+    <!-- endbuild -->
+  </body>
+</html>
