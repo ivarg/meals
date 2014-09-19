@@ -129,8 +129,14 @@ core-pages {
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: all .5s ease-in-out;
+    z-index: 4;
+    user-select: none;
 }
+
+.meal-card__trans {
+    transition: all .3s ease-in-out;
+}
+
 
 .meal-card__name {
     font-size: 1.4em;
@@ -147,6 +153,7 @@ core-pages {
 
 .dropzone {
     border: 1px dashed;
+    z-index: 1;
 }
 
 .day-1 {
@@ -156,6 +163,7 @@ core-pages {
 .day-2 {
     /* background: hsla(50,95%,85%,0.46); */
     transform: translateY(80px);
+    /* top: 80px; */
 }
 .day-3 {
     /* background: hsla(100,95%,85%,0.46); */

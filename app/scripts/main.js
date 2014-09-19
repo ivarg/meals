@@ -29,10 +29,6 @@
       });
   }
 
-  $('.drawer__side > paper-fab').mousedown(function() {
-    toggleDrawer();
-  });
-
   $('#whatis').mousedown(function() {
     openDrawer();
   });
@@ -45,98 +41,66 @@
     closeDrawer();
   });
 
-  $('#btn-swap').on('click', function(e) {
-    var m = $('.day-1');
-    var t = $('.day-2');
-    m.removeClass('day-1');
-    m.addClass('day-2');
-    t.removeClass('day-2');
-    t.addClass('day-1');
-    console.log('switching days');
-  });
-
-  $.each($('.meal-card'), function(i, o) {
-    $(o).attr('draggable', 'true');
-  });
-
-  function shiftUp(dayNr) {
-    var classNow = 'day-' + dayNr;
-    var classThen = 'day-' + (dayNr+1);
+  function swapDays(srcObj, dstObj) {
+    var srcClass = 'day-' + dayNr(srcObj);
+    var dstClass = 'day-' + dayNr(dstObj);
+    $(srcObj).removeClass(srcClass).addClass(dstClass);
+    $(dstObj).removeClass(dstClass).addClass(srcClass);
   }
 
-  function getNrFromClass(className) {
-    
+  function dayNr(obj) {
+    var classes = obj.classList;
+    for (var i=0; i<classes.length; i++) {
+      var c = classes[i].split('-');
+      if (c[0] === 'day') {
+        return parseInt(c[1]);
+      }
+    }
+    return -1;
   }
 
-  // drag-and-drop event handlers
+  // dragging starts here
+  var $dragging = null;
+  var $ptrX = 0;
+  var $ptrY = 0;
+  var $origY = 0;
   $.each($('.meal-card'), function(i, obj) {
-    obj.addEventListener('dragstart', function(e) {
-      var classes = e.target.classList;
-      for (var i=0; i<classes.length; i++) {
-        var c = classes[i].split('-');
-        if (c[0] === 'day') {
-          console.log('storing class ' + classes[i]);
-          sessionStorage.setItem('dragDay', classes[i]);
-        }
+    $(obj).addClass('meal-card__trans');
+
+    $(obj).mousedown(function(e) {
+      $dragging = $(e.target);
+      $dragging.removeClass('meal-card__trans');
+      $ptrX = e.offsetX;
+      $ptrY = e.offsetY;
+      $origY = $dragging.offset().top;
+      $dragging.addClass('dropzone');
+    });
+
+    $(obj).mouseup(function (e) {
+      $dragging.addClass('meal-card__trans');
+      $dragging.offset({top: $origY});
+      $dragging.removeClass('dropzone');
+      $dragging = null;
+      $ptrX = 0;
+      $ptrY = 0;
+      $origY = 0;
+    });
+
+    // when entering another day, swap the day class
+    $(obj).mouseenter(function(e) {
+      if ($dragging && $dragging.get(0) !== e.target ) {
+        $origY = $(e.target).offset().top;
+        swapDays($dragging.get(0), e.target);
       }
-      e.dataTransfer.effectAllowed = 'move';
-    });
-
-    obj.addEventListener('dragend', function(e) {
-      // e.preventDefault();
-    });
-
-    obj.addEventListener('drop', function(e) {
-      var d = e.dataTransfer.getData('obj');
-      e.preventDefault();
-      // debugger;
-    });
-
-    obj.addEventListener('dragover', function(e) {
-      e.dataTransfer.dropEffect = 'move';
-      e.preventDefault();
-    });
-
-    // obj.addEventListener('drag', function(e) {
-    // });
-
-    // At dragenter, shift the meals
-    obj.addEventListener('dragenter', function(e) {
-      e.dataTransfer.dropEffect = 'move';
-      if (e.target === e.currentTarget) {
-        // $(e.target).addClass('dropzone');
-        var classes = e.target.classList;
-        for (var i=0; i<classes.length; i++) {
-          var c = classes[i].split('-');
-          var dragDay = sessionStorage.getItem('dragDay');
-          if (c[0] === 'day' && classes[i] !== dragDay) {
-            console.log('> '+classes[i]);
-            swapDays(dragDay, classes[i]);
-            break;
-          }
-        }
-      }
-
-      e.preventDefault();
-    });
-
-    obj.addEventListener('dragleave', function(e) {
-      // if (e.target === e.currentTarget) {
-      //   $(e.target).removeClass('dropzone');
-      // }
     });
 
   });
 
-  function swapDays(srcClass, dstClass) {
-    console.log('swap days: ' + srcClass + ' <> ' + dstClass);
-    var src = $('.'+srcClass);
-    var dst = $('.'+dstClass);
-    // debugger;
-    src.removeClass(srcClass).addClass(dstClass);
-    dst.removeClass(dstClass).addClass(srcClass);
-    sessionStorage.setItem('dragDay', dstClass);
-  }
+  $(document.body).on("mousemove", function(e) {
+    if ($dragging) {
+      $dragging.offset({ top: (e.pageY-$ptrY) });
+    }
+  });
 
 }());
 
