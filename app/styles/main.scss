@@ -117,6 +117,22 @@ core-pages {
     user-select: none;
 }
 
+.meal-card__base {
+    box-sizing: border-box;
+    width: 350px;
+    height: 65px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    /* margin: 15px; */
+    background: hsla(40, 10%, 100%,0.46);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    user-select: none;
+}
+
 .meal-card {
     box-sizing: border-box;
     width: 350px;
@@ -125,7 +141,7 @@ core-pages {
     top: 0px;
     left: 0px;
     /* margin: 15px; */
-    background: hsla(0, 0%, 100%,0.46);
+    background: hsla(0, 0%, 90%,1);
     display: flex;
     justify-content: center;
     align-items: center;
