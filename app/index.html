@@ -19,6 +19,7 @@
     <link rel="import" href="bower_components/paper-fab/paper-fab.html">
     <link rel="import" href="bower_components/paper-input/paper-input.html">
     <link rel="import" href="polymer/my-counter/my-counter.html">
+    <link rel="import" href="polymer/meal-card/meal-card.html">
     <!-- endbuild -->
 
     <!-- build:css styles/main.css -->
@@ -44,10 +45,6 @@
           <p>En gång i veckan får ni en föreslagen meny som ni själv kan justera innan ni godkänner.</p>
           <p>När ni har godkänt en meny genereras en inköpslista för det som behöver inhandlas. Varje dag skickar sedan appen en påminnelse om dagens rätt.</p>
         </div>
-
-        <!-- <div class="registration"> -->
-        <!-- <paper-input label="Epostadress"></paper-input> -->
-        <!-- </div> -->
       </div>
 
       <div class="drawer__side">
@@ -61,41 +58,50 @@
     <div class="panel">
       <core-pages selected="0">
         <div class="mealplan">
-          <div class="meal-card__base day-1">
-            <div class="meal-card__name">Placeholder</div>
+          <div day="1" class="meal-card__base">
+            <div class="meal-card__name">Måndag</div>
           </div>
-          <div class="meal-card day-1">
+          <div day="2" class="meal-card__base">
+            <div class="meal-card__name">Tisdag</div>
+          </div>
+          <div day="3" class="meal-card__base">
+            <div class="meal-card__name">Onsdag</div>
+          </div>
+          <div day="4" class="meal-card__base">
+            <div class="meal-card__name">Torsdag</div>
+          </div>
+          <div day="5" class="meal-card__base">
+            <div class="meal-card__name">Fredag</div>
+          </div>
+          <div day="6" class="meal-card__base">
+            <div class="meal-card__name">Lördag</div>
+          </div>
+          <div day="7" class="meal-card__base">
+            <div class="meal-card__name">Söndag</div>
+          </div>
+
+
+          <div day="2" class="meal-card">
             <paper-shadow z="1"></paper-shadow>
             <div class="meal-card__name">hejsan</div>
           </div>
-
-          <div class="meal-card__base day-2">
-            <div class="meal-card__name">Placeholder</div>
-          </div>
-
-          <div class="meal-card__base day-3">
-            <div class="meal-card__name">Placeholder</div>
-          </div>
-          <div class="meal-card day-3">
+          <div day="3" class="meal-card">
             <paper-shadow z="1"></paper-shadow>
-            <div class="meal-card__name">Lax i Ugn</div>
+            <div class="meal-card__name">hoppsan</div>
           </div>
-          <div class="meal-card day-4">
-            <paper-shadow z="1"></paper-shadow>
-            <div class="meal-card__name">Köttbullar & Potatismos</div>
-          </div>
-          <div class="meal-card day-5">
+          <div day="5" class="meal-card">
             <paper-shadow z="1"></paper-shadow>
             <div class="meal-card__name">Fisk</div>
           </div>
-          <div class="meal-card day-6">
+          <div day="6" class="meal-card">
             <paper-shadow z="1"></paper-shadow>
             <div class="meal-card__name">Blommig Falukorv</div>
           </div>
-          <div class="meal-card day-7">
+          <div day="7" class="meal-card">
             <paper-shadow z="1"></paper-shadow>
             <div class="meal-card__name">Grodlår</div>
           </div>
+
         </div>
       </core-pages>
     </div>
