@@ -1,6 +1,9 @@
 $color--deep-blue: #6a6afa;
 $color--dark-blue: #4a4ada;
 
+$break-small: 480px;
+$break-medium: 1024px;
+$break-large: 1200px;
 
 
 * {
@@ -30,11 +33,22 @@ body {
     background: $color--deep-blue;
     color: white;
     display: flex;
+    @media screen and (max-width: $break-medium) {
+        flex-direction: column;
+    }
+    @media screen and (min-width: $break-medium+1) {
+        flex-direction: row;
+    }
     z-index: 99;
 }
 
 .drawer--open {
-    transform: translate(calc(300px - 100vw));
+    @media screen and (max-width: $break-medium) {
+        transform: translateY(calc(100px - 100vh));
+    }
+    @media screen and (min-width: $break-medium+1) {
+        transform: translate(calc(300px - 100vw));
+    }
 }
 
 .trans {
@@ -70,7 +84,12 @@ body {
 
 .drawer__side {
     display: flex;
-    flex-direction: column;
+    @media screen and (max-width: $break-medium) {
+        flex-direction: row;
+    }
+    @media screen and (min-width: $break-medium+1) {
+        flex-direction: column;
+    }
     align-items: center;
     width: 300px;
 }
@@ -125,7 +144,7 @@ core-pages {
     top: 0px;
     left: 0px;
     /* margin: 15px; */
-    background: hsla(40, 10%, 100%,0.46);
+    /* background: hsla(40, 10%, 100%,0.46); */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -161,46 +180,32 @@ core-pages {
     /* padding: 20px; */
 }
 
-.dragged-from {
-    /* border: 2px dashed; */
-    /* opacity: 0; */
-    /* visibility: hidden; */
-}
-
 .dropzone {
     border: 1px dashed;
     z-index: 1;
+}
+
+input {
+    background: hsla(0, 0%, 85%,1);
+    font-size: 1.4em;
+    font-weight: 300;
+    text-align: center;
+    border: 0;
+    outline: 0;
 }
 
 .lift {
     z-index: 10;
 }
 
-[day="1"] {
-    /* transform: translateY(0px); */
-    top: 0px;
+@for $i from 1 through 7 {
+    [day="#{$i}"].meal-card__base {
+        background: hsla(50*(($i)-1),95%,85%,0.26);
+    }
 }
-[day="2"] {
-    /* transform: translateY(80px); */
-    top: 80px;
-}
-[day="3"] {
-    /* transform: translateY(160px); */
-    top: 160px;
-}
-[day="4"] {
-    /* transform: translateY(240px); */
-    top: 240px;
-}
-[day="5"] {
-    /* transform: translateY(320px); */
-    top: 320px;
-}
-[day="6"] {
-    /* transform: translateY(400px); */
-    top: 400px;
-}
-[day="7"] {
-    /* transform: translateY(480px); */
-    top: 480px;
+
+@for $i from 1 through 7 {
+    [day="#{$i}"] {
+        top: (($i)-1)*80px;
+    }
 }

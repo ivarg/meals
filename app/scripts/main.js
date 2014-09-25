@@ -21,7 +21,7 @@
       .addClass('trans')
       .toggleClass('drawer--open')
       .on('transitionend', function(e) {
-        if (e.target.id === 'drawer') {
+        if (e.currentTarget.id === 'drawer') {
           $('#drawer')
             .removeClass('trans')
             .off('transitionend');
@@ -29,17 +29,26 @@
       });
   }
 
-  $('#whatis').mousedown(function() {
-    openDrawer();
-  });
-
-  $('#config').mousedown(function() {
-    openDrawer();
-  });
-
-  $('#home').mousedown(function() {
-    closeDrawer();
-  });
+  function newCard(mealplan, dayNr) {
+    var inputCard = $('<div></div>')
+          .append('<paper-shadow z="1"></paper-shadow>')
+          .append('<input type="text" autofocus="false">')
+          .attr('day', dayNr)
+          .addClass('meal-card');
+    mealplan.append(inputCard);
+    inputCard.on('keypress', 'input', function(e) {
+      if (e.keyCode === 13) {
+        if (this.value === '') {
+          inputCard.remove();
+          return;
+        }
+        var name = $('<div></div>').append(this.value).addClass('meal-card__name');
+        $(this).remove();
+        inputCard.append(name);
+        addCardDragHandler(0, inputCard);
+      }
+    });
+  }
 
   function swapDays(srcObj, dstObj) {
     var srcClass = 'day-' + dayNr(srcObj);
@@ -116,6 +125,32 @@
     });
   }
 
+  function addCardDragHandler(i, card) {
+    $(card).addClass('meal-card__trans');
+
+    $(card).mousedown(function(e) {
+      if (e.currentTarget.classList.contains('meal-card')) {
+        $dragging = $(e.currentTarget);
+        $dragging.base = getCurrentBase($dragging);
+        lift($dragging);
+        $dragging.removeClass('meal-card__trans');
+        $ptrY = e.offsetY;
+      }
+    });
+
+    $(card).mouseup(function (e) {
+      if ($dragging !== null) {
+        drop($dragging);
+        $dragging.addClass('meal-card__trans');
+        resetToDay($dragging, $dragging.base.attr('day'));
+        $dragging.base.removeClass('dropzone');
+        $dragging = null;
+        $ptrY = 0;
+      }
+    });
+
+  }
+
   // dragging starts here
   var $dragging = null;
   var $bases = [];
@@ -125,33 +160,27 @@
   // Document ready: start setting up stuff
   $(document).ready(function() {
 
+    $('#whatis').mousedown(function() {
+      openDrawer();
+    });
+
+    $('#config').mousedown(function() {
+      openDrawer();
+    });
+
+    $('#home').mousedown(function() {
+      closeDrawer();
+    });
+
+    $('.meal-card__base').mousedown(function() {
+      newCard($(this).parent(), $(this).attr('day'));
+    });
+
     $.each($('.meal-card__base'), function(i, base) {
       $bases.push($(base));
     });
 
-    $.each($('.meal-card'), function(i, obj) {
-      $(obj).addClass('meal-card__trans');
-
-      $(obj).mousedown(function(e) {
-        $dragging = $(e.target);
-        $dragging.base = getCurrentBase($dragging);
-        lift($dragging);
-        $dragging.removeClass('meal-card__trans');
-        $ptrY = e.offsetY;
-      });
-
-      $(obj).mouseup(function (e) {
-        drop($dragging);
-        $dragging.addClass('meal-card__trans');
-        // $dragging.offset($dragging.base.offset());
-        // $dragging.attr('day', $dragging.base.attr('day'));
-        resetToDay($dragging, $dragging.base.attr('day'));
-        $dragging.base.removeClass('dropzone');
-        $dragging = null;
-        $ptrY = 0;
-      });
-
-    });
+    $.each($('.meal-card'), addCardDragHandler);
 
     $(document.body).on("mousemove", function(e) {
       if ($dragging) {
