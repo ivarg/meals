@@ -1,36 +1,21 @@
-$color--deep-blue: #6a6afa;
-$color--dark-blue: #4a4ada;
-
 $break-small: 480px;
 $break-medium: 1024px;
 $break-large: 1200px;
 
+@import "base";
+@import "colors";
 
-* {
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-}
+$large-drawer-width: 300px;
+$small-drawer-width: 100px;
 
-h1#home {
-    font-size: 4em;
-    font-weight: 100;
-    cursor: pointer;
-}
 
-body {
-    margin: 0;
-    padding: 0;
-    background: #fafada;
 
-    width: 100vw;
-    height: 100vh;
-}
-
-#drawer {
+.drawer {
     position: absolute;
     top: 0;
     bottom: 0;
     width: 100vw;
-    background: $color--deep-blue;
+    background: $clr-deep-blue;
     color: white;
     display: flex;
     @media screen and (max-width: $break-medium) {
@@ -44,7 +29,7 @@ body {
 
 .drawer--open {
     @media screen and (max-width: $break-medium) {
-        transform: translateY(calc(100px - 100vh));
+        transform: translateY(calc(100px - 100%));
     }
     @media screen and (min-width: $break-medium+1) {
         transform: translate(calc(300px - 100vw));
@@ -52,7 +37,7 @@ body {
 }
 
 .trans {
-    transition: transform .75s ease-in-out;
+    transition: transform 0.2s ease-in-out;
 }
 
 .drawer__big {
@@ -63,7 +48,7 @@ body {
     justify-content: center;
 }
 
-.drawer__big--pitch {
+.drawer .pitch {
     background: rgba(0,0,0,0.1);
     padding: 35px;
     flex: 1 1 70%;
@@ -83,15 +68,18 @@ body {
 }
 
 .drawer__side {
+    background: $clr-light-blue;
     display: flex;
     @media screen and (max-width: $break-medium) {
         flex-direction: row;
+        height: 100px;
+        /* width: 300px; */
     }
     @media screen and (min-width: $break-medium+1) {
+        width: 300px;
         flex-direction: column;
     }
     align-items: center;
-    width: 300px;
 }
 
 .drawer__lnk {
@@ -169,7 +157,7 @@ core-pages {
 }
 
 .meal-card__trans {
-    transition: all .3s ease-in-out;
+    transition: all 0.1s ease-in-out;
 }
 
 

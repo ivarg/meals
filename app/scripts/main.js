@@ -2,27 +2,33 @@
   'use strict';
   /*global $*/
 
+    $.fn.tclick = function (onclick) {
+        this.on("touchstart", function (e) { onclick.call(this, e); e.stopPropagation(); e.preventDefault(); });
+        this.on("mousedown", function (e) { onclick.call(this, e); });   //substitute mousedown event for exact same result as touchstart         
+        return this;
+    };
+
   function openDrawer() {
-    if ($('#drawer').hasClass('drawer--open')) {
+    if ($('.drawer').hasClass('drawer--open')) {
       return;
     }
     toggleDrawer();
   }
 
   function closeDrawer() {
-    if (!$('#drawer').hasClass('drawer--open')) {
+    if (!$('.drawer').hasClass('drawer--open')) {
       return;
     }
     toggleDrawer();
   }
 
   function toggleDrawer() {
-    $('#drawer')
+    $('.drawer')
       .addClass('trans')
       .toggleClass('drawer--open')
       .on('transitionend', function(e) {
         if (e.currentTarget.id === 'drawer') {
-          $('#drawer')
+          $('.drawer')
             .removeClass('trans')
             .off('transitionend');
         }
@@ -168,7 +174,7 @@
       openDrawer();
     });
 
-    $('#home').mousedown(function() {
+    $('.drawer__side > h1').mousedown(function() {
       closeDrawer();
     });
 
