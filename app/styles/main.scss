@@ -66,6 +66,27 @@
 .toolbar {
     background: $clr-pink;
     height: $toolbar-height;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.reload {
+    background: red;
+    flex: 1;
+    height: 100%;
+    font-size: 1.3em;
+    font-weight: 100;
+    font-spacing: 3px;
+}
+
+.accept {
+    background: green;
+    flex: 1;
+    height: 100%;
+    font-size: 1.3em;
+    font-weight: 100;
+    font-spacing: 3px;
 }
 
 .drawer__side {
