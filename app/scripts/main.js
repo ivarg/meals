@@ -99,10 +99,36 @@
     });
   }
 
-  function addCardDragHandler(i, card) {
-    $(card).addClass('meal-card__trans');
+  function addCardDragHandler($card) {
+    $card.on('touchstart', function(e) {
+      console.log('touchstart');
+      if (e.currentTarget.classList.contains('meal-card')) {
+        e.preventDefault();
+        var touches = e.originalEvent.changedTouches;
+        $touchId = touches[0].identifier;
+        $dragging = $(touches[0].target);
+        $dragging.base = getCurrentBase($dragging);
+        lift($dragging);
+        $dragging.removeClass('meal-card__trans');
+        $ptrY = touches[0].pageY - touches[0].target.offsetTop;
+      }
+    });
 
-    $(card).mousedown(function(e) {
+    $card.on('touchend', function(e) {
+      console.log('touchend');
+      if ($dragging !== null) {
+        e.preventDefault();
+        drop($dragging);
+        $dragging.addClass('meal-card__trans');
+        resetToDay($dragging, $dragging.base.attr('day'));
+        $dragging.base.removeClass('dropzone');
+        $dragging = null;
+        $ptrY = 0;
+      }
+    });
+
+
+    $card.on('mousedown', function(e) {
       if (e.currentTarget.classList.contains('meal-card')) {
         $dragging = $(e.currentTarget);
         $dragging.base = getCurrentBase($dragging);
@@ -112,7 +138,7 @@
       }
     });
 
-    $(card).mouseup(function (e) {
+    $card.on('mouseup', function (e) {
       if ($dragging !== null) {
         drop($dragging);
         $dragging.addClass('meal-card__trans');
@@ -125,10 +151,22 @@
 
   }
 
+  function layoutCard($card) {
+    var d = $card.attr('day');
+    console.log('laying out card #' + d);
+    var $base = getBaseAtDay(d);
+    console.log($base);
+    $card.offset($base.offset());
+    $card.height($base.height());
+    $card.width($base.width());
+  }
+
+
   // dragging starts here
   var $dragging = null;
   var $bases = [];
   var $ptrY = 0;
+  var $touchId = -1;
 
   //////////////////////
   // Document ready: start setting up stuff
@@ -154,12 +192,33 @@
       $bases.push($(base));
     });
 
-    $.each($('.meal-card'), addCardDragHandler);
+    $.each($('.meal-card'), function(i, card) {
+      var $c = $(card);
+      $c.addClass('meal-card__trans');
+      layoutCard($c);
+      addCardDragHandler($c);
+    });
 
     $(document.body).on("mousemove", function(e) {
       if ($dragging) {
         $dragging.offset({ top: (e.pageY-$ptrY) });
         checkBase($dragging.position().top, $dragging.height());
+      }
+    });
+
+    $(document.body).on('touchmove', function(e) {
+      console.log('touchmove');
+      if ($dragging) {
+        e.preventDefault();
+        var touches = e.originalEvent.changedTouches;
+        for (var i=0; i<touches.length; i++) {
+          if (touches[i].identifier === $touchId) {
+            $dragging.offset({ top: (touches[i].pageY-$ptrY) });
+            checkBase($dragging.position().top, $dragging.height());
+            // console.log(touches[i].pageY);
+          }
+        }
+        // $dragging.offset({ top: (e.pageY-$ptrY) });
       }
     });
 
