@@ -1,22 +1,115 @@
 @import "base";
 @import "colors";
 
-$large-drawer-width: 300px;
-$small-drawer-width: 100px;
+.panel {
+    background: #dadada;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    padding-top: $drawer-sml;
+    box-sizing: border-box;
+    /* border: 1px dashed; */
 
-
-
-.drawer__side > h1 {
-    @media screen and (max-width: $break-small) {
-        @include title-font-size($small);
-        /* font-size: 2em; */
-    }
     @media screen and (min-width: $break-small+1) {
-        @include title-font-size($large);
-        /* font-size: 4em; */
+        top: 0;
+        left: 0;
+        padding-top: 0;
+        padding-left: $drawer-lrg;
     }
-    font-weight: 100;
+}
+
+.mealplan {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    border: 1px dashed;
+    /* overflow: hidden; */
+}
+
+.meal-card__base {
+    box-sizing: border-box;
+    flex-grow: 1;
+    margin-bottom: 1px;
+    z-index: 1;
+    user-select: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.meal-card {
+    background: hsla(0, 0%, 90%,1);
+    box-sizing: border-box;
+    /* flex-grow: 1; */
+
+    position: absolute;
+    /* width: 100%; */
+    /* height: 65px; */
+    /* top: 0px; */
+    /* left: 0px; */
+    /* margin: 15px; */
+    z-index: 4;
+    user-select: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+.toolbar {
+    background: $clr-pink;
+    height: $toolbar-height;
+}
+
+.drawer__side {
+    background: $clr-light-blue;
+    height: $drawer-sml;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    h1 {
+        @include title-font-size($small);
+        font-weight: $light;
+        cursor: pointer;
+    }
+
+    #whatis, #config {
+        display: none;
+    }
+
+    @media screen and (min-width: $break-small+1) {
+        height: 100%;
+        width: $drawer-lrg;
+        flex-direction: column;
+        justify-content: flex-start;
+
+        h1 {
+            @include title-font-size($large);
+        }
+        #whatis, #config {
+            display: block;
+        }
+    }
+}
+
+.drawer__lnk {
     cursor: pointer;
+    font-size: 1.5em;
+    font-weight: 100;
+    margin: 10px;
+    padding: 15px;
+    /* width: 50px; */
+    height: 30px;
+    /* background: #aaaaaa; */
 }
 
 .drawer {
@@ -27,21 +120,20 @@ $small-drawer-width: 100px;
     background: $clr-deep-blue;
     color: white;
     display: flex;
-    @media screen and (max-width: $break-small) {
-        flex-direction: column;
-    }
+    flex-direction: column;
+    z-index: 99;
+
     @media screen and (min-width: $break-small+1) {
         flex-direction: row;
     }
-    z-index: 99;
 }
 
 .drawer--open {
     @media screen and (max-width: $break-small) {
-        transform: translateY(calc(100px - 100%));
+        transform: translateY(calc(50px - 100%));
     }
     @media screen and (min-width: $break-small+1) {
-        transform: translate(calc(300px - 100vw));
+        transform: translate(calc(300px - 100%));
     }
 }
 
@@ -58,11 +150,9 @@ $small-drawer-width: 100px;
 }
 
 .drawer .pitch {
-    @media screen and (max-width: $break-small) {
-    }
+    padding: 35px;
     @media screen and (min-width: $break-small+1) {
         background: rgba(0,0,0,0.1);
-        padding: 35px;
         flex: 1 1 70%;
         margin: 50px;
         min-height: 300px;
@@ -80,94 +170,6 @@ $small-drawer-width: 100px;
     background: white;
 }
 
-.drawer__side {
-    background: $clr-light-blue;
-    display: flex;
-    @media screen and (max-width: $break-small) {
-        flex-direction: row;
-        height: 100px;
-        /* width: 300px; */
-    }
-    @media screen and (min-width: $break-small+1) {
-        width: 300px;
-        flex-direction: column;
-    }
-    align-items: center;
-}
-
-.drawer__lnk {
-    cursor: pointer;
-    font-size: 1.5em;
-    font-weight: 100;
-    margin: 10px;
-    padding: 15px;
-    /* width: 50px; */
-    height: 30px;
-    /* background: #aaaaaa; */
-}
-
-.panel {
-    position: absolute;
-    top: 0;
-    left: 300px;
-    right: 0;
-    height: 100vh;
-    background: #dadada;
-
-    /* display: flex; */
-    /* justify-content: center; */
-    /* align-items: center; */
-}
-
-core-pages {
-    border: 1px;
-    /* height: 90%; */
-    margin: 70px 90px;
-    /* margin-left: 30px; */
-    /* border: 1px solid; */
-}
-
-.mealplan {
-    height: 600px;
-    overflow: hidden;
-    /* border: 1px dashed; */
-}
-
-[draggable] {
-    user-select: none;
-}
-
-.meal-card__base {
-    box-sizing: border-box;
-    width: 350px;
-    height: 65px;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    /* margin: 15px; */
-    /* background: hsla(40, 10%, 100%,0.46); */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1;
-    user-select: none;
-}
-
-.meal-card {
-    box-sizing: border-box;
-    width: 350px;
-    height: 65px;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    /* margin: 15px; */
-    background: hsla(0, 0%, 90%,1);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 4;
-    user-select: none;
-}
 
 .meal-card__trans {
     transition: all 0.1s ease-in-out;
@@ -205,8 +207,3 @@ input {
     }
 }
 
-@for $i from 1 through 7 {
-    [day="#{$i}"] {
-        top: (($i)-1)*80px;
-    }
-}

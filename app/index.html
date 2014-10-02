@@ -16,7 +16,6 @@
     <link rel="import" href="bower_components/core-icons/core-icons.html">
     <link rel="import" href="bower_components/core-pages/core-pages.html">
     <link rel="import" href="bower_components/paper-shadow/paper-shadow.html">
-    <link rel="import" href="bower_components/paper-fab/paper-fab.html">
     <link rel="import" href="bower_components/paper-input/paper-input.html">
     <link rel="import" href="polymer/my-counter/my-counter.html">
     <link rel="import" href="polymer/meal-card/meal-card.html">
@@ -32,7 +31,7 @@
   </head>
   <body>
 
-    <div class="drawer">
+    <div class="drawer drawer--open">
       <paper-shadow z="1"></paper-shadow>
 
       <div class="drawer__big">
@@ -57,46 +56,65 @@
     </div>
 
     <div class="panel">
-      <core-pages selected="0">
-        <div class="mealplan">
-          <div day="1" class="meal-card__base">
-            <div class="meal-card__name">Måndag</div>
-          </div>
-          <div day="2" class="meal-card__base">
-            <div class="meal-card__name">Tisdag</div>
-          </div>
-          <div day="3" class="meal-card__base">
-            <div class="meal-card__name">Onsdag</div>
-          </div>
-          <div day="4" class="meal-card__base">
-            <div class="meal-card__name">Torsdag</div>
-          </div>
-          <div day="5" class="meal-card__base">
-            <div class="meal-card__name">Fredag</div>
-          </div>
-          <div day="6" class="meal-card__base">
-            <div class="meal-card__name">Lördag</div>
-          </div>
-          <div day="7" class="meal-card__base">
-            <div class="meal-card__name">Söndag</div>
-          </div>
-
-
-          <div day="2" class="meal-card">
-            <paper-shadow z="1"></paper-shadow>
-            <div class="meal-card__name">Fisk</div>
-          </div>
-          <div day="5" class="meal-card">
-            <paper-shadow z="1"></paper-shadow>
-            <div class="meal-card__name">Blommig Falukorv</div>
-          </div>
-          <div day="6" class="meal-card">
-            <paper-shadow z="1"></paper-shadow>
-            <div class="meal-card__name">Grodlår</div>
-          </div>
-
+      <!-- <core-pages selected="0"> -->
+      <div class="mealplan">
+        <div day="1" class="meal-card__base">
+          <div class="meal-card__name">Måndag</div>
         </div>
-      </core-pages>
+        <div day="2" class="meal-card__base">
+          <div class="meal-card__name">Tisdag</div>
+        </div>
+        <div day="3" class="meal-card__base">
+          <div class="meal-card__name">Onsdag</div>
+        </div>
+        <div day="4" class="meal-card__base">
+          <div class="meal-card__name">Torsdag</div>
+        </div>
+        <div day="5" class="meal-card__base">
+          <div class="meal-card__name">Fredag</div>
+        </div>
+        <div day="6" class="meal-card__base">
+          <div class="meal-card__name">Lördag</div>
+        </div>
+        <div day="7" class="meal-card__base">
+          <div class="meal-card__name">Söndag</div>
+        </div>
+
+
+        <div day="1" class="meal-card">
+          <paper-shadow z="1"></paper-shadow>
+          <div class="meal-card__name">Mat 1</div>
+        </div>
+        <div day="2" class="meal-card">
+          <paper-shadow z="1"></paper-shadow>
+          <div class="meal-card__name">Mat 2</div>
+        </div>
+        <div day="3" class="meal-card">
+          <paper-shadow z="1"></paper-shadow>
+          <div class="meal-card__name">Mat 3</div>
+        </div>
+        <div day="4" class="meal-card">
+          <paper-shadow z="1"></paper-shadow>
+          <div class="meal-card__name">Mat 4</div>
+        </div>
+        <div day="5" class="meal-card">
+          <paper-shadow z="1"></paper-shadow>
+          <div class="meal-card__name">Mat 5</div>
+        </div>
+        <div day="6" class="meal-card">
+          <paper-shadow z="1"></paper-shadow>
+          <div class="meal-card__name">Mat 6</div>
+        </div>
+        <div day="7" class="meal-card">
+          <paper-shadow z="1"></paper-shadow>
+          <div class="meal-card__name">Mat 7</div>
+        </div>
+
+      </div>
+      <!-- </core-pages> -->
+
+      <div class="toolbar">
+      </div>
     </div>
 
     <!-- build:js scripts/vendor.js -->

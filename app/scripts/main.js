@@ -1,22 +1,9 @@
 (function() {
   'use strict';
-  /*global $*/
-
-    $.fn.tclick = function (onclick) {
-        this.on("touchstart", function (e) { onclick.call(this, e); e.stopPropagation(); e.preventDefault(); });
-        this.on("mousedown", function (e) { onclick.call(this, e); });   //substitute mousedown event for exact same result as touchstart         
-        return this;
-    };
+  /*global $, console*/
 
   function openDrawer() {
     if ($('.drawer').hasClass('drawer--open')) {
-      return;
-    }
-    toggleDrawer();
-  }
-
-  function closeDrawer() {
-    if (!$('.drawer').hasClass('drawer--open')) {
       return;
     }
     toggleDrawer();
@@ -56,34 +43,16 @@
     });
   }
 
-  function swapDays(srcObj, dstObj) {
-    var srcClass = 'day-' + dayNr(srcObj);
-    var dstClass = 'day-' + dayNr(dstObj);
-    $(srcObj).removeClass(srcClass).addClass(dstClass);
-    $(dstObj).removeClass(dstClass).addClass(srcClass);
-  }
-
-  function dayNr(obj) {
-    var classes = obj.classList;
-    for (var i=0; i<classes.length; i++) {
-      var c = classes[i].split('-');
-      if (c[0] === 'day') {
-        return parseInt(c[1]);
-      }
-    }
-    return -1;
-  }
-
   function lift($elem) {
     $elem.addClass('lift');
     var shadow = $elem.children('paper-shadow');
-    shadow.attr('z', "2");
+    shadow.attr('z', '2');
   }
 
   function drop($elem) {
     $elem.removeClass('lift');
     var shadow = $elem.children('paper-shadow');
-    shadow.attr('z', "1");
+    shadow.attr('z', '1');
   }
 
   function getCurrentBase($elem) {
@@ -118,11 +87,10 @@
         $dragging.base.removeClass('dropzone');
         var srcDay = $dragging.attr('day');
         var dstDay = b.attr('day');
-
         $dragging.base = b;
         $dragging.base.addClass('dropzone');
         var card = getCardAtDay(dstDay);
-        if (card.length == 1) {
+        if (card.length === 1) {
           resetToDay(card, srcDay);
           $dragging.attr('day', dstDay);
         }
@@ -175,7 +143,7 @@
     });
 
     $('.drawer__side > h1').mousedown(function() {
-      closeDrawer();
+      toggleDrawer();
     });
 
     $('.meal-card__base').mousedown(function() {
