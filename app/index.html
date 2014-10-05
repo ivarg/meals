@@ -1,24 +1,21 @@
 <!doctype html>
-<html class="no-js">
+<html>
   <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="apple-mobile-web-app-title" content="meals">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta charset="utf-8">
     <title>meals</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!--<meta name="description" content="">-->
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, minimal-ui">-->
 
     <script src="bower_components/platform/platform.js"></script>
 
     <!-- build:css styles/vendor.css -->
     <!-- bower:css -->
     <!-- endbower -->
-    <link rel="import" href="bower_components/core-meta/core-meta.html">
-    <link rel="import" href="bower_components/core-icons/core-icons.html">
-    <link rel="import" href="bower_components/core-pages/core-pages.html">
-    <link rel="import" href="bower_components/paper-shadow/paper-shadow.html">
-    <link rel="import" href="bower_components/paper-input/paper-input.html">
-    <link rel="import" href="polymer/my-counter/my-counter.html">
-    <link rel="import" href="polymer/meal-card/meal-card.html">
+    <!--<link rel="import" href="bower_components/paper-shadow/paper-shadow.html">-->
     <!-- endbuild -->
 
     <!-- build:css styles/main.css -->
@@ -31,17 +28,15 @@
   </head>
   <body>
 
-    <div class="drawer drawer--open">
-      <paper-shadow z="1"></paper-shadow>
+    <div class="drawer drawer--open trans">
 
       <div class="drawer__big">
         <div class="pitch">
-          <paper-shadow z="2"></paper-shadow>
           <p><strong><em>meals</em></strong> är en smart matplanerare som vet vad du
             och din familj tycker om, och som låter er tänka på annat än vad ni ska äta
             till middag. Idag, eller imorgon, eller nästa vecka.</p>
-          <p>En gång i veckan får ni en föreslagen meny som ni själv kan justera innan
-            ni godkänner.</p>
+          <p>En gång i veckan får ni en föreslagen meny utifrån era preferenser som 
+             ni själv kan justera innan ni godkänner.</p>
           <p>När ni har godkänt en meny genereras en inköpslista för det som behöver
             inhandlas. Varje dag skickar sedan appen en påminnelse om dagens rätt.</p>
         </div>
@@ -51,12 +46,13 @@
         <h1>me&#600;ls</h1>
         <div class="drawer__lnk" id="whatis">Generera en matlista</div>
         <div class="drawer__lnk" id="config">Konfigurera</div>
-        <!-- <div class="drawer__lnk" id="register">Registrera dig</div> -->
+        <div class="price">
+            624 kr
+        </div>
       </div>
     </div>
 
     <div class="panel">
-      <!-- <core-pages selected="0"> -->
       <div class="mealplan">
         <div day="1" class="meal-card__base">
           <div class="meal-card__name">Måndag</div>
@@ -82,36 +78,29 @@
 
 
         <div day="1" class="meal-card">
-          <paper-shadow z="1"></paper-shadow>
+          <!--<paper-shadow z="1"></paper-shadow>-->
           <div class="meal-card__name">Mat 1</div>
         </div>
-        <div day="2" class="meal-card">
-          <paper-shadow z="1"></paper-shadow>
-          <div class="meal-card__name">Mat 2</div>
-        </div>
-        <div day="3" class="meal-card">
-          <paper-shadow z="1"></paper-shadow>
-          <div class="meal-card__name">Mat 3</div>
-        </div>
-        <div day="4" class="meal-card">
-          <paper-shadow z="1"></paper-shadow>
-          <div class="meal-card__name">Mat 4</div>
-        </div>
+        <!--<div day="2" class="meal-card">-->
+          <!--<div class="meal-card__name">Mat 2</div>-->
+        <!--</div>-->
+        <!--<div day="3" class="meal-card">-->
+          <!--<div class="meal-card__name">Mat 3</div>-->
+        <!--</div>-->
+        <!--<div day="4" class="meal-card">-->
+          <!--<div class="meal-card__name">Mat 4</div>-->
+        <!--</div>-->
         <div day="5" class="meal-card">
-          <paper-shadow z="1"></paper-shadow>
           <div class="meal-card__name">Mat 5</div>
         </div>
         <div day="6" class="meal-card">
-          <paper-shadow z="1"></paper-shadow>
           <div class="meal-card__name">Mat 6</div>
         </div>
-        <div day="7" class="meal-card">
-          <paper-shadow z="1"></paper-shadow>
-          <div class="meal-card__name">Mat 7</div>
-        </div>
+        <!--<div day="7" class="meal-card">-->
+          <!--<div class="meal-card__name">Mat 7</div>-->
+        <!--</div>-->
 
       </div>
-      <!-- </core-pages> -->
 
       <div class="toolbar">
           <div class="reload">
@@ -121,7 +110,7 @@
               accept
           </div>
       </div>
-    </div>
+  </div>
 
     <!-- build:js scripts/vendor.js -->
     <!-- bower:js -->

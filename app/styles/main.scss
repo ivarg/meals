@@ -26,8 +26,6 @@
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    border: 1px dashed;
-    /* overflow: hidden; */
 }
 
 .meal-card__base {
@@ -80,6 +78,13 @@
     font-spacing: 3px;
 }
 
+.configure {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
 .accept {
     background: green;
     flex: 1;
@@ -90,17 +95,23 @@
 }
 
 .drawer__side {
-    background: $clr-light-blue;
+    background: black;
     height: $drawer-sml;
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
 
     h1 {
         @include title-font-size($small);
+        padding-left: 5px;
         font-weight: $light;
         cursor: pointer;
+    }
+
+    .price {
+        padding-right: 5px;
+        font-weight: $light;
     }
 
     #whatis, #config {
@@ -150,16 +161,16 @@
 }
 
 .drawer--open {
-    @media screen and (max-width: $break-small) {
-        transform: translateY(calc(50px - 100%));
-    }
+    /*@media screen and (max-width: $break-small) {*/
+        transform: translateY(calc(50px - 460px));
+    /*}*/
     @media screen and (min-width: $break-small+1) {
         transform: translate(calc(300px - 100%));
     }
 }
 
 .trans {
-    transition: transform 0.2s ease-in-out;
+    transition: transform 0.5s ease-in-out;
 }
 
 .drawer__big {
@@ -172,6 +183,7 @@
 
 .drawer .pitch {
     padding: 35px;
+    font-weight: $light;
     @media screen and (min-width: $break-small+1) {
         background: rgba(0,0,0,0.1);
         flex: 1 1 70%;
@@ -193,7 +205,7 @@
 
 
 .meal-card__trans {
-    transition: all 0.1s ease-in-out;
+    transition: all 0.3s ease-in-out;
 }
 
 
@@ -205,7 +217,7 @@
 }
 
 .dropzone {
-    border: 1px dashed;
+    /*border: 1px dashed;*/
     z-index: 1;
 }
 

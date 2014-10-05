@@ -11,20 +11,11 @@
 
   function toggleDrawer() {
     $('.drawer')
-      .addClass('trans')
-      .toggleClass('drawer--open')
-      .on('transitionend', function(e) {
-        if (e.currentTarget.id === 'drawer') {
-          $('.drawer')
-            .removeClass('trans')
-            .off('transitionend');
-        }
-      });
+      .toggleClass('drawer--open');
   }
 
   function newCard(mealplan, dayNr) {
     var inputCard = $('<div></div>')
-          .append('<paper-shadow z="1"></paper-shadow>')
           .append('<input type="text" autofocus="false">')
           .attr('day', dayNr)
           .addClass('meal-card');
@@ -44,15 +35,13 @@
   }
 
   function lift($elem) {
+    console.log('lift');
     $elem.addClass('lift');
-    var shadow = $elem.children('paper-shadow');
-    shadow.attr('z', '2');
   }
 
   function drop($elem) {
+    console.log('drop');
     $elem.removeClass('lift');
-    var shadow = $elem.children('paper-shadow');
-    shadow.attr('z', '1');
   }
 
   function getCurrentBase($elem) {
@@ -153,9 +142,7 @@
 
   function layoutCard($card) {
     var d = $card.attr('day');
-    console.log('laying out card #' + d);
     var $base = getBaseAtDay(d);
-    console.log($base);
     $card.offset($base.offset());
     $card.height($base.height());
     $card.width($base.width());
@@ -184,9 +171,9 @@
       toggleDrawer();
     });
 
-    $('.meal-card__base').mousedown(function() {
-      newCard($(this).parent(), $(this).attr('day'));
-    });
+    //$('.meal-card__base').mousedown(function() {
+      //newCard($(this).parent(), $(this).attr('day'));
+    //});
 
     $.each($('.meal-card__base'), function(i, base) {
       $bases.push($(base));
@@ -197,6 +184,14 @@
       $c.addClass('meal-card__trans');
       layoutCard($c);
       addCardDragHandler($c);
+    });
+
+    $('.reload').on('click', function(e)  {
+        console.log('reload');
+    });
+
+    $('.accept').on('click', function(e) {
+        console.log('accept');
     });
 
     $(document.body).on("mousemove", function(e) {
@@ -215,10 +210,8 @@
           if (touches[i].identifier === $touchId) {
             $dragging.offset({ top: (touches[i].pageY-$ptrY) });
             checkBase($dragging.position().top, $dragging.height());
-            // console.log(touches[i].pageY);
           }
         }
-        // $dragging.offset({ top: (e.pageY-$ptrY) });
       }
     });
 
