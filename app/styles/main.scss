@@ -1,85 +1,136 @@
-$break-small: 480px;
-$break-medium: 1024px;
-$break-large: 1200px;
-
 @import "base";
 @import "colors";
 
-$large-drawer-width: 300px;
-$small-drawer-width: 100px;
-
-
-
-.drawer {
+.panel {
+    background: #dadada;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     position: absolute;
     top: 0;
     bottom: 0;
-    width: 100vw;
-    background: $clr-deep-blue;
-    color: white;
+    width: 100%;
+    padding-top: $drawer-sml;
+    box-sizing: border-box;
+    /* border: 1px dashed; */
+
+    @media screen and (min-width: $break-small+1) {
+        top: 0;
+        left: 0;
+        padding-top: 0;
+        padding-left: $drawer-lrg;
+    }
+}
+
+.mealplan {
+    flex-grow: 1;
     display: flex;
-    @media screen and (max-width: $break-medium) {
-        flex-direction: column;
-    }
-    @media screen and (min-width: $break-medium+1) {
-        flex-direction: row;
-    }
-    z-index: 99;
+    flex-direction: column;
 }
 
-.drawer--open {
-    @media screen and (max-width: $break-medium) {
-        transform: translateY(calc(100px - 100%));
-    }
-    @media screen and (min-width: $break-medium+1) {
-        transform: translate(calc(300px - 100vw));
-    }
+.meal-card__base {
+    box-sizing: border-box;
+    flex-grow: 1;
+    margin-bottom: 1px;
+    z-index: 1;
+    user-select: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-.trans {
-    transition: transform 0.2s ease-in-out;
+.meal-card {
+    background: hsla(0, 0%, 90%,1);
+    box-sizing: border-box;
+    /* flex-grow: 1; */
+
+    position: absolute;
+    /* width: 100%; */
+    /* height: 65px; */
+    /* top: 0px; */
+    /* left: 0px; */
+    /* margin: 15px; */
+    z-index: 4;
+    user-select: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-.drawer__big {
-    flex: 1;
+
+
+.toolbar {
+    background: $clr-pink;
+    height: $toolbar-height;
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
 }
 
-.drawer .pitch {
-    background: rgba(0,0,0,0.1);
-    padding: 35px;
-    flex: 1 1 70%;
-    margin: 50px;
-    min-height: 300px;
-    max-width: 500px;
-    overflow: hidden;
+.reload {
+    background: red;
+    flex: 1;
+    height: 100%;
     font-size: 1.3em;
     font-weight: 100;
     font-spacing: 3px;
 }
 
-.registration {
-    height: 300px;
-    width: 500px;
-    background: white;
+.configure {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.accept {
+    background: green;
+    flex: 1;
+    height: 100%;
+    font-size: 1.3em;
+    font-weight: 100;
+    font-spacing: 3px;
 }
 
 .drawer__side {
-    background: $clr-light-blue;
+    background: black;
+    height: $drawer-sml;
     display: flex;
-    @media screen and (max-width: $break-medium) {
-        flex-direction: row;
-        height: 100px;
-        /* width: 300px; */
-    }
-    @media screen and (min-width: $break-medium+1) {
-        width: 300px;
-        flex-direction: column;
-    }
+    flex-direction: row;
+    justify-content: space-between;
     align-items: center;
+
+    h1 {
+        @include title-font-size($small);
+        padding-left: 5px;
+        font-weight: $light;
+        cursor: pointer;
+    }
+
+    .price {
+        padding-right: 5px;
+        font-weight: $light;
+    }
+
+    #whatis, #config {
+        display: none;
+    }
+
+    @media screen and (min-width: $break-small+1) {
+        height: 100%;
+        width: $drawer-lrg;
+        flex-direction: column;
+        justify-content: flex-start;
+
+        h1 {
+            @include title-font-size($large);
+        }
+        #whatis, #config {
+            display: block;
+        }
+    }
 }
 
 .drawer__lnk {
@@ -93,71 +144,68 @@ $small-drawer-width: 100px;
     /* background: #aaaaaa; */
 }
 
-.panel {
+.drawer {
     position: absolute;
     top: 0;
-    left: 300px;
-    right: 0;
-    height: 100vh;
-    background: #dadada;
-
-    /* display: flex; */
-    /* justify-content: center; */
-    /* align-items: center; */
-}
-
-core-pages {
-    border: 1px;
-    /* height: 90%; */
-    margin: 70px 90px;
-    /* margin-left: 30px; */
-    /* border: 1px solid; */
-}
-
-.mealplan {
-    height: 600px;
-    overflow: hidden;
-    /* border: 1px dashed; */
-}
-
-[draggable] {
-    user-select: none;
-}
-
-.meal-card__base {
-    box-sizing: border-box;
-    width: 350px;
-    height: 65px;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    /* margin: 15px; */
-    /* background: hsla(40, 10%, 100%,0.46); */
+    bottom: 0;
+    width: 100vw;
+    background: $clr-deep-blue;
+    color: white;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1;
-    user-select: none;
+    flex-direction: column;
+    z-index: 99;
+
+    @media screen and (min-width: $break-small+1) {
+        flex-direction: row;
+    }
 }
 
-.meal-card {
-    box-sizing: border-box;
-    width: 350px;
-    height: 65px;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    /* margin: 15px; */
-    background: hsla(0, 0%, 90%,1);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 4;
-    user-select: none;
+.drawer--open {
+    /*@media screen and (max-width: $break-small) {*/
+        transform: translateY(calc(50px - 460px));
+    /*}*/
+    @media screen and (min-width: $break-small+1) {
+        transform: translate(calc(300px - 100%));
+    }
 }
+
+.trans {
+    transition: transform 0.5s ease-in-out;
+}
+
+.drawer__big {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.drawer .pitch {
+    padding: 35px;
+    font-weight: $light;
+    @media screen and (min-width: $break-small+1) {
+        background: rgba(0,0,0,0.1);
+        flex: 1 1 70%;
+        margin: 50px;
+        min-height: 300px;
+        max-width: 500px;
+        overflow: hidden;
+        font-size: 1.3em;
+        font-weight: 100;
+        font-spacing: 3px;
+    }
+}
+
+.registration {
+    height: 300px;
+    width: 500px;
+    background: white;
+}
+
 
 .meal-card__trans {
-    transition: all 0.1s ease-in-out;
+    transition: all 0.3s ease-in-out;
 }
 
 
@@ -169,7 +217,7 @@ core-pages {
 }
 
 .dropzone {
-    border: 1px dashed;
+    /*border: 1px dashed;*/
     z-index: 1;
 }
 
@@ -192,8 +240,3 @@ input {
     }
 }
 
-@for $i from 1 through 7 {
-    [day="#{$i}"] {
-        top: (($i)-1)*80px;
-    }
-}

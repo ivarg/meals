@@ -1,12 +1,6 @@
 (function() {
   'use strict';
-  /*global $*/
-
-    $.fn.tclick = function (onclick) {
-        this.on("touchstart", function (e) { onclick.call(this, e); e.stopPropagation(); e.preventDefault(); });
-        this.on("mousedown", function (e) { onclick.call(this, e); });   //substitute mousedown event for exact same result as touchstart         
-        return this;
-    };
+  /*global $, console*/
 
   function openDrawer() {
     if ($('.drawer').hasClass('drawer--open')) {
@@ -15,29 +9,13 @@
     toggleDrawer();
   }
 
-  function closeDrawer() {
-    if (!$('.drawer').hasClass('drawer--open')) {
-      return;
-    }
-    toggleDrawer();
-  }
-
   function toggleDrawer() {
     $('.drawer')
-      .addClass('trans')
-      .toggleClass('drawer--open')
-      .on('transitionend', function(e) {
-        if (e.currentTarget.id === 'drawer') {
-          $('.drawer')
-            .removeClass('trans')
-            .off('transitionend');
-        }
-      });
+      .toggleClass('drawer--open');
   }
 
   function newCard(mealplan, dayNr) {
     var inputCard = $('<div></div>')
-          .append('<paper-shadow z="1"></paper-shadow>')
           .append('<input type="text" autofocus="false">')
           .attr('day', dayNr)
           .addClass('meal-card');
@@ -56,34 +34,14 @@
     });
   }
 
-  function swapDays(srcObj, dstObj) {
-    var srcClass = 'day-' + dayNr(srcObj);
-    var dstClass = 'day-' + dayNr(dstObj);
-    $(srcObj).removeClass(srcClass).addClass(dstClass);
-    $(dstObj).removeClass(dstClass).addClass(srcClass);
-  }
-
-  function dayNr(obj) {
-    var classes = obj.classList;
-    for (var i=0; i<classes.length; i++) {
-      var c = classes[i].split('-');
-      if (c[0] === 'day') {
-        return parseInt(c[1]);
-      }
-    }
-    return -1;
-  }
-
   function lift($elem) {
+    console.log('lift');
     $elem.addClass('lift');
-    var shadow = $elem.children('paper-shadow');
-    shadow.attr('z', "2");
   }
 
   function drop($elem) {
+    console.log('drop');
     $elem.removeClass('lift');
-    var shadow = $elem.children('paper-shadow');
-    shadow.attr('z', "1");
   }
 
   function getCurrentBase($elem) {
@@ -118,11 +76,10 @@
         $dragging.base.removeClass('dropzone');
         var srcDay = $dragging.attr('day');
         var dstDay = b.attr('day');
-
         $dragging.base = b;
         $dragging.base.addClass('dropzone');
         var card = getCardAtDay(dstDay);
-        if (card.length == 1) {
+        if (card.length === 1) {
           resetToDay(card, srcDay);
           $dragging.attr('day', dstDay);
         }
@@ -131,10 +88,36 @@
     });
   }
 
-  function addCardDragHandler(i, card) {
-    $(card).addClass('meal-card__trans');
+  function addCardDragHandler($card) {
+    $card.on('touchstart', function(e) {
+      console.log('touchstart');
+      if (e.currentTarget.classList.contains('meal-card')) {
+        e.preventDefault();
+        var touches = e.originalEvent.changedTouches;
+        $touchId = touches[0].identifier;
+        $dragging = $(touches[0].target);
+        $dragging.base = getCurrentBase($dragging);
+        lift($dragging);
+        $dragging.removeClass('meal-card__trans');
+        $ptrY = touches[0].pageY - touches[0].target.offsetTop;
+      }
+    });
 
-    $(card).mousedown(function(e) {
+    $card.on('touchend', function(e) {
+      console.log('touchend');
+      if ($dragging !== null) {
+        e.preventDefault();
+        drop($dragging);
+        $dragging.addClass('meal-card__trans');
+        resetToDay($dragging, $dragging.base.attr('day'));
+        $dragging.base.removeClass('dropzone');
+        $dragging = null;
+        $ptrY = 0;
+      }
+    });
+
+
+    $card.on('mousedown', function(e) {
       if (e.currentTarget.classList.contains('meal-card')) {
         $dragging = $(e.currentTarget);
         $dragging.base = getCurrentBase($dragging);
@@ -144,7 +127,7 @@
       }
     });
 
-    $(card).mouseup(function (e) {
+    $card.on('mouseup', function (e) {
       if ($dragging !== null) {
         drop($dragging);
         $dragging.addClass('meal-card__trans');
@@ -157,10 +140,20 @@
 
   }
 
+  function layoutCard($card) {
+    var d = $card.attr('day');
+    var $base = getBaseAtDay(d);
+    $card.offset($base.offset());
+    $card.height($base.height());
+    $card.width($base.width());
+  }
+
+
   // dragging starts here
   var $dragging = null;
   var $bases = [];
   var $ptrY = 0;
+  var $touchId = -1;
 
   //////////////////////
   // Document ready: start setting up stuff
@@ -175,23 +168,50 @@
     });
 
     $('.drawer__side > h1').mousedown(function() {
-      closeDrawer();
+      toggleDrawer();
     });
 
-    $('.meal-card__base').mousedown(function() {
-      newCard($(this).parent(), $(this).attr('day'));
-    });
+    //$('.meal-card__base').mousedown(function() {
+      //newCard($(this).parent(), $(this).attr('day'));
+    //});
 
     $.each($('.meal-card__base'), function(i, base) {
       $bases.push($(base));
     });
 
-    $.each($('.meal-card'), addCardDragHandler);
+    $.each($('.meal-card'), function(i, card) {
+      var $c = $(card);
+      $c.addClass('meal-card__trans');
+      layoutCard($c);
+      addCardDragHandler($c);
+    });
+
+    $('.reload').on('click', function(e)  {
+        console.log('reload');
+    });
+
+    $('.accept').on('click', function(e) {
+        console.log('accept');
+    });
 
     $(document.body).on("mousemove", function(e) {
       if ($dragging) {
         $dragging.offset({ top: (e.pageY-$ptrY) });
         checkBase($dragging.position().top, $dragging.height());
+      }
+    });
+
+    $(document.body).on('touchmove', function(e) {
+      console.log('touchmove');
+      if ($dragging) {
+        e.preventDefault();
+        var touches = e.originalEvent.changedTouches;
+        for (var i=0; i<touches.length; i++) {
+          if (touches[i].identifier === $touchId) {
+            $dragging.offset({ top: (touches[i].pageY-$ptrY) });
+            checkBase($dragging.position().top, $dragging.height());
+          }
+        }
       }
     });
 
