@@ -1,0 +1,6 @@
+web/app
+web/node_modules
+web/test
+web/bower.json
+web/gulpfile.js
+meals
