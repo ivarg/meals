@@ -6,7 +6,6 @@ import (
 )
 
 func main() {
-	fmt.Println("hello, meals and docker")
+	fmt.Println("Starting web server...")
 	http.ListenAndServe("0.0.0.0:8080", http.FileServer(http.Dir("web/dist")))
-	fmt.Println("goodbye")
 }

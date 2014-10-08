@@ -1,3 +1,6 @@
+.git
+*.go
+*.tar
 web/app
 web/node_modules
 web/test
