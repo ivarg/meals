@@ -14,26 +14,28 @@
       .toggleClass('drawer--open');
   }
 
-  function newCard(mealplan, dayNr) {
-    var inputCard = $('<div></div>')
-          .append('<input type="text" autofocus="false">')
-          .attr('day', dayNr)
-          .addClass('meal-card');
-    mealplan.append(inputCard);
-    inputCard.on('keypress', 'input', function(e) {
-      if (e.keyCode === 13) {
-        if (this.value === '') {
-          inputCard.remove();
-          return;
-        }
-        var name = $('<div></div>').append(this.value).addClass('meal-card__name');
-        $(this).remove();
-        inputCard.append(name);
-        addCardDragHandler(0, inputCard);
-      }
-    });
-  }
-
+/*
+ *  function newCard(mealplan, dayNr) {
+ *    var inputCard = $('<div></div>')
+ *          .append('<input type="text" autofocus="false">')
+ *          .attr('day', dayNr)
+ *          .addClass('meal-card');
+ *    mealplan.append(inputCard);
+ *    inputCard.on('keypress', 'input', function(e) {
+ *      if (e.keyCode === 13) {
+ *        if (this.value === '') {
+ *          inputCard.remove();
+ *          return;
+ *        }
+ *        var name = $('<div></div>').append(this.value).addClass('meal-card__name');
+ *        $(this).remove();
+ *        inputCard.append(name);
+ *        addCardDragHandler(0, inputCard);
+ *      }
+ *    });
+ *  }
+ *
+ */
   function lift($elem) {
     console.log('lift');
     $elem.addClass('lift');
@@ -127,7 +129,7 @@
       }
     });
 
-    $card.on('mouseup', function (e) {
+    $card.on('mouseup', function () {
       if ($dragging !== null) {
         drop($dragging);
         $dragging.addClass('meal-card__trans');
@@ -186,15 +188,15 @@
       addCardDragHandler($c);
     });
 
-    $('.reload').on('click', function(e)  {
+    $('.reload').on('click', function()  {
         console.log('reload');
     });
 
-    $('.accept').on('click', function(e) {
+    $('.accept').on('click', function() {
         console.log('accept');
     });
 
-    $(document.body).on("mousemove", function(e) {
+    $(document.body).on('mousemove', function(e) {
       if ($dragging) {
         $dragging.offset({ top: (e.pageY-$ptrY) });
         checkBase($dragging.position().top, $dragging.height());
