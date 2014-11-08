@@ -1,6 +1,0 @@
-web/node_modules
-web/dist
-web/.tmp
-web/.sass-cache
-web/app/bower_components
-web/test/bower_components
