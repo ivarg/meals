@@ -13,6 +13,7 @@ gulp.task('styles', function () {
             precision: 10
         }))
         .pipe($.autoprefixer('last 1 version'))
+        .pipe($.minifyCss())
         .pipe(gulp.dest('.tmp/styles'))
         .pipe($.size());
 });
@@ -113,7 +114,6 @@ gulp.task('watch', ['connect', 'serve'], function () {
     var server = $.livereload();
 
     // watch for changes
-
     gulp.watch([
         'app/*.html',
         '.tmp/styles/**/*.css',
